@@ -12,4 +12,5 @@ class TwitterItem(scrapy.Item):
     account = scrapy.Field()
     imageUrl = scrapy.Field()
     tweetUrl = scrapy.Field()
+    occurrence = scrapy.Field()
     pass

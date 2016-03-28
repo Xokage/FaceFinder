@@ -7,10 +7,7 @@ class TwitterSpider(scrapy.Spider):
     name       = "twitterspider"
     allowed_domains = ["mobile.twitter.com"]
     start_urls  = ["https://mobile.twitter.com/Cristiano"]
-#    rules = (
-#    Rule(LinkExtractor(restrict_xpaths=("//a[contains(@class,'twitter-atreply dir-ltr')]/@href")), follow=True),
-#    Rule(LinkExtractor(restrict_xpaths=("//div[@class='w-button-more']/a/@href")), follow=True),
-#    )
+
 
     #Get what tweets has images
     def parse(self, response):
