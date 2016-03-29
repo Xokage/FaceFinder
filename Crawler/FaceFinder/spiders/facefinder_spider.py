@@ -2,15 +2,22 @@ import scrapy
 from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
 from FaceFinder.items import TwitterItem
+from brpy import init_brpy
 
 class TwitterSpider(scrapy.Spider):
     name       = "twitterspider"
     allowed_domains = ["mobile.twitter.com"]
     start_urls  = ["https://mobile.twitter.com/Cristiano"]
-#    rules = (
-#    Rule(LinkExtractor(restrict_xpaths=("//a[contains(@class,'twitter-atreply dir-ltr')]/@href")), follow=True),
-#    Rule(LinkExtractor(restrict_xpaths=("//div[@class='w-button-more']/a/@href")), follow=True),
-#    )
+    br = init_brpy(br_loc='/usr/local/lib') #Default openbr lib location.
+    
+    
+    #initialize spider
+    def start_requests(self):
+        #OpenBR init
+	    br.br_initialize_default()
+	    br.br_set_property('algorithm','compare')
+
+        return scrapy.Request(start_urls[1])
 
     #Get what tweets has images
     def parse(self, response):
