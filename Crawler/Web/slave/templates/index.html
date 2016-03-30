@@ -27,7 +27,7 @@
                 <div class="center">
                     {% if request.get_full_path == "/" %} <h1>Páxina principal do escravo</h1> 
                     {% elif request.get_full_path == "/currentjob/" %} <h1>Tarefa actual</h1>
-                    {% elif request.get_full_path == "/data/" %} <h1>Datos obtidos</h1>
+                    {% elif  "/data" in request.get_full_path  %} <h1>Datos obtidos</h1>
                     <div>
                     {% if some_data_list %}
                     <center><table>
@@ -44,6 +44,21 @@
                         </tr>
                     {% endfor %}
                     </table></center>
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if some_data_list.has_previous %}
+                                <a href="?page={{ some_data_list.previous_page_number }}">Anterior</a>
+                            {% endif %}
+
+                            <span class="current">
+                                Paxina {{ some_data_list.number }} de {{ some_data_list.paginator.num_pages }}.
+                            </span>
+
+                            {% if some_data_list.has_next %}
+                                <a href="?page={{ some_data_list.next_page_number }}">Seguinte</a>
+                            {% endif %}
+                        </span>
+                    </div>
                     {% else %}
                         <p>Non se atoparon datos.</p>
                     </div>
@@ -82,7 +97,7 @@
                 <ul id="nav">
                     <li {% if request.get_full_path == "/" %} class="active" {% endif %}><a href="/" title="Páxina Principal">Páxina Principal</a></li>
                     <li {% if request.get_full_path == "/currentjob/" %} class="active" {% endif %}><a href="/currentjob" title="Tarefa actual">Tarefa actual</a></li>
-                    <li {% if request.get_full_path == "/data/" %} class="active" {% endif %}><a href="/data" title="">Datos Crawleados</a></li>
+                    <li {% if "/data" in request.get_full_path  %} class="active" {% endif %}><a href="/data" title="">Datos Crawleados</a></li>
                 </ul>
                 <!-- Navigation end -->
             </div>
