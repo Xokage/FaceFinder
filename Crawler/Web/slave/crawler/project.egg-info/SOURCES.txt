@@ -1,0 +1,16 @@
+setup.py
+FaceFinder/__init__.py
+FaceFinder/bloom_filter.py
+FaceFinder/items.py
+FaceFinder/pipelines.py
+FaceFinder/settings.py
+FaceFinder/comparision/__init__.py
+FaceFinder/comparision/face_comparision.py
+FaceFinder/comparision/settings.py
+FaceFinder/spiders/__init__.py
+FaceFinder/spiders/twitter_spider.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt

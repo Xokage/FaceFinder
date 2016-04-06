@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load django_tables2 %}
+
+
+{% block content %}
+<div id="intro">
+            <div class="wrap clearfix">
+                <div class="center">
+                    <h1>Tarefas</h1>
+                    {% if table_running %}
+                        <h2>En execución</h2>
+                        <center>{% render_table table_running %}</center>
+                    {% endif %}
+                    {% if table_finished %}
+                        <h2>Rematadas</h2>
+                        <center>{% render_table table_finished %}</center>
+                    {% endif %}
+                    {% if table_pending %}
+                        <h2>Pendentes</h2>
+                        <center>{% render_table table_pending %}</center>
+                    {% endif %}
+                    </br>
+
+                </div>
+            </div>
+                <center>        
+                    <h1> Opcións </h1>            
+                    <h3>
+                        <a href="/addjob" title="Nova Tarefa">Nova Tarefa</a>
+                    </h3>
+                </center>
+        </div>
+{% endblock %}
