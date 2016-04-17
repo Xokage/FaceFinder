@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load django_tables2 %}
+
+{% block content %}
+<div id="intro">
+            <div class="wrap clearfix">
+                <div class="center">
+                    <h1>Persoas</h1>
+                    {% if table %}
+                        <center>{% render_table table %}</center>
+                    {% endif %}
+                </div>
+            </div>
+                <center>        
+                    <h1> Opcións </h1>            
+                    <h3>
+                        <a href="/addperson" title="Nova Persoa">Nova Persoa</a>
+                    </h3>
+                </center>
+        </div>
+{% endblock %}

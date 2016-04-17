@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load django_tables2 %}
+{% load staticfiles %}
+
+{% block content %}
+<script src="{% static "js/dropzone.js" %}" type="text/javascript"></script>
+
+<div id="intro">
+            <div class="wrap clearfix">
+                <div class="center">
+                    <h1>{{ person_name }}</h1>
+                    <center><img src="{{ person_image_url }}" style="width:150px;height:150px;"/></center>
+                    <h2>Imaxes xa engadidas:</h2>
+                    {% for img in image_list %}
+                        <{% cycle 'tr' 'tr' 'tr' 'td' %}>      
+                            <img src="{{ img }}" style="width:150px;height:150px;"/>
+                        </{% cycle 'tr' 'tr' 'tr' 'td' %}>                  
+
+                    {% endfor %}
+                    <h2>Engada as imaxes que se usarán como referencia: </h2>
+
+             <form action="/upload_picture/{{ person_id }}" class="dropzone" drop-zone>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}
