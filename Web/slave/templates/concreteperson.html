@@ -11,12 +11,16 @@
                     <h1>{{ person_name }}</h1>
                     <center><img src="{{ person_image_url }}" style="width:150px;height:150px;"/></center>
                     <h2>Imaxes xa engadidas:</h2>
-                    {% for img in image_list %}
-                        <{% cycle 'tr' 'tr' 'tr' 'td' %}>      
-                            <img src="{{ img }}" style="width:150px;height:150px;"/>
-                        </{% cycle 'tr' 'tr' 'tr' 'td' %}>                  
-
+                    <table>
+                    {% for imgurl, imgid in image_list %}
+                        {% cycle '<tr>' '' '' '' '' '' %}
+                        <td class="reference-image ">      
+                         <a href="/delete_picture/{{ imgid }}" onClick="return confirm('Queres borrar a foto?')" ><img src="{{ imgurl }}" style="width:150px;height:150px;" /></a>
+                         
+                        </td>                  
+                        {% cycle '' '' '' '' '' '</tr>' %}
                     {% endfor %}
+                    </table>
                     <h2>Engada as imaxes que se usarán como referencia: </h2>
 
              <form action="/upload_picture/{{ person_id }}" class="dropzone" drop-zone>

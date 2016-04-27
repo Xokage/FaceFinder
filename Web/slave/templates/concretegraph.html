@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load django_tables2 %}
+{% load static %}
 
 {% block content %}
 <div id="intro">
@@ -7,6 +8,7 @@
                 <div class="center">
                     <h1>Grafos de Relacións de {{ person_name }}</h1>
                     <center><img src="{{ person_image_url }}" style="width:150px;height:150px;"/></center>
+                    <center><img src="{% get_media_prefix %}graph_{{ person_id }}.png" /> </center>
                 </div>
             </div>
         </div>

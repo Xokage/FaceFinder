@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models.signals import post_delete
+
+
 
 # Create your models here.
 
@@ -19,11 +22,11 @@ class TwitterItem(models.Model):
 
 def pictures_directory_path(instance, filename):
         # file will be uploaded to MEDIA_ROOT/<name> <lastname>/<filename>
-        return 'pictures/{0}/{1}'.format(instance.name + " " + instance.lastname, filename)
+        return 'pictures/{0}/main_picture/{1}'.format(instance.name + " " + instance.lastname, filename)
 
 def refpictures_directory_path(instance, filename):
         # file will be uploaded to MEDIA_ROOT/<name> <lastname>/<filename>
-        return 'pictures/{0}/{1}'.format(instance.person.name + " " + instance.person.lastname, filename)
+        return 'pictures/{0}/reference_pictures/{1}'.format(instance.person.name + " " + instance.person.lastname, filename)
 
 
 class Person(models.Model):
@@ -38,3 +41,5 @@ class Person(models.Model):
 class Picture(models.Model):
     file = models.ImageField(upload_to=refpictures_directory_path)
     person = models.ForeignKey('Person', on_delete=models.CASCADE,)
+
+    

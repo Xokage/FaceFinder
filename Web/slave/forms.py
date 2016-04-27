@@ -7,8 +7,6 @@ class AddJobForm(forms.Form):
     name = forms.CharField(label='Nome da persoa', max_length=100)
     lastname = forms.CharField(label='Apelidos da persoa', max_length=100)
     twitter_url = forms.CharField(label='Url de twitter (recorda que ten que ser de mobile.twitter.com)', max_length=200)
-    image_directory = forms.CharField(label='Subdirectorio das imaxes a comparar', max_length=100)
-    downloads_directory = forms.CharField(label='Subdirectorio de descarga de imaxes', max_length=100)
     
     def clean(self):
         data = self.cleaned_data
@@ -25,11 +23,11 @@ class AddPersonForm(forms.ModelForm):
     name = forms.CharField(label='Nome da persoa', max_length=100)
     lastname = forms.CharField(label='Apelidos da persoa', max_length=100)
     age = forms.IntegerField(label='Idade', min_value=1)
-    picture = forms.ImageField(label='Fotografia')
+    main_picture = forms.ImageField(label='Fotografia')
     
     class Meta:
         model = Person
-        fields = ("name", "lastname", "age", "picture")
+        fields = ("name", "lastname", "age", "main_picture")
 
 
 class PhotoUploadForm(forms.Form):

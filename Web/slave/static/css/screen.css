@@ -610,3 +610,25 @@ img.floatRight {margin-left: 20px}
         border-bottom: 6px solid #be2626; }
 
 
+
+/*
+* IMAGE HOVER ON DELTE (Concrete person)
+*
+*/
+
+
+.reference-image{
+ position: relative;}
+.reference-image img {
+  width: 48px;
+  height: 48px;
+ border-radius: 500px;
+ display: block;
+}
+
+.reference-image:hover img {
+    border: solid 1px #CCC;
+    -moz-box-shadow: 1px 1px 5px #999;
+    -webkit-box-shadow: 1px 1px 5px #999;
+        box-shadow: 1px 1px 5px #999;
+}
