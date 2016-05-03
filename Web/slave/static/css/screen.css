@@ -632,3 +632,28 @@ img.floatRight {margin-left: 20px}
     -webkit-box-shadow: 1px 1px 5px #999;
         box-shadow: 1px 1px 5px #999;
 }
+
+.topdown-list li {
+    list-style-type:disc
+}
+
+.options-list li {
+    list-style: none;
+    display: inline-block;
+}
+
+.loadbutton {
+    position: relative;
+}
+
+.loadbutton img{
+  width: 48px;
+  height: 48px;
+  display: none;
+}
+
+.loadbutton:hover img{
+  width: 48px;
+  height: 48px;
+  display: block;
+}

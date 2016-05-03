@@ -1,33 +1,44 @@
 {% extends "base.html" %}
 {% load django_tables2 %}
-
+{% load staticfiles %}
 
 {% block content %}
 <div id="intro">
             <div class="wrap clearfix">
                 <div class="center">
                     <h1>Tarefas</h1>
-                    {% if table_running %}
                         <h2>En execución</h2>
+                    {% if table_running %}
                         <center>{% render_table table_running %}</center>
+                    {% else %}
+                        <center>Non se atoparon tarefas.</center>
                     {% endif %}
-                    {% if table_finished %}
                         <h2>Rematadas</h2>
+                    {% if table_finished %}
                         <center>{% render_table table_finished %}</center>
+                    {% else %}
+                        <center>Non se atoparon tarefas.</center>
                     {% endif %}
-                    {% if table_pending %}
                         <h2>Pendentes</h2>
+                    {% if table_pending %}
                         <center>{% render_table table_pending %}</center>
+                    {% else %}
+                        <center>Non se atoparon tarefas.</center>
                     {% endif %}
                     </br>
 
                 </div>
+                <p>        
+                    <ul class="options-list">
+                        <li>
+                            <h1> Opcións: </h1>            
+                        </li>
+                        <li>
+                            <a href="/addjob" title="Nova Tarefa">Nova Tarefa</a>
+                        </li>
+                    </ul>
+                </p>
             </div>
-                <center>        
-                    <h1> Opcións </h1>            
-                    <h3>
-                        <a href="/addjob" title="Nova Tarefa">Nova Tarefa</a>
-                    </h3>
-                </center>
+
         </div>
 {% endblock %}

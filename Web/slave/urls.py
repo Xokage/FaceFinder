@@ -11,6 +11,8 @@ urlpatterns = [
     # ex: /addjob    
     url(r'^addjob/?$', views.addjob, name='addjob'),
     # ex: /people    
+    url(r'^canceljob/(?P<job_id>[0-9a-f]+)$', views.canceljob, name='canceljob'),
+    # ex: /people    
     url(r'^people/?$', views.people, name='people'),
     # ex: /graphs    
     url(r'^graphs/?$', views.graphs, name='graphs'),
@@ -24,6 +26,8 @@ urlpatterns = [
     url(r'^upload_picture/(?P<person_id>[0-9]+)$', views.upload_picture, name='upload_picture'),
     # ex: /delete_picture/1    
     url(r'^delete_picture/(?P<picture_id>[0-9]+)$', views.delete_picture, name='delete_picture'),
+    # ex: /delete_picture/1    
+    url(r'^delete_person/(?P<person_id>[0-9]+)$', views.delete_person, name='delete_person'),
     
 
 ]

@@ -8,7 +8,10 @@
                 <div class="center">
                     <h1>Grafos de Relacións de {{ person_name }}</h1>
                     <center><img src="{{ person_image_url }}" style="width:150px;height:150px;"/></center>
-                    <center><img src="{% get_media_prefix %}graph_{{ person_id }}.png" /> </center>
+                    <center><img src="{% get_media_prefix %}graph_{{ person_id }}.png" style="width:850px;height:850px"/> </center>
+                    <form enctype="multipart/form-data" method="POST" class="dark-matter" >{% csrf_token %}
+                        {{ form.as_p }}
+                    <button type="submit" class="dark-matter button btn btn-default">Redebuxar Grafo</button>
                 </div>
             </div>
         </div>

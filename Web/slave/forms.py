@@ -34,3 +34,12 @@ class PhotoUploadForm(forms.Form):
     #Keep name to 'file' because that's what Dropzone is using
     file = forms.ImageField(required=True)
 
+
+class DataFilterForm(forms.Form):
+    person_name = forms.CharField(label='Persoa', max_length=100, required=False)
+    account_name = forms.CharField(label='Conta', max_length=100, required=False)
+    min_occurrence = forms.FloatField(label='Acerto', min_value=0, required=False)
+
+
+class GraphMinOccurrenceForm(forms.Form):
+    min_occurrence = forms.FloatField(label='Acerto', min_value=0)    

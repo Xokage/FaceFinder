@@ -69,12 +69,12 @@ def br_add_images(directories,template_list,image_list,br):
 
 
 
-def find_weight(main_person, rel_person):
+def find_weight(main_person, rel_person, min_score):
     mcomparision_list = []
     mtmpl_list = []
     rcomparision_list = []
     rtmpl_list = []
-    pass_score = 0.5
+    pass_score = min_score
     weight = 0
     mimage_dir = imgreference_directory_path(main_person)
     rimage_dir = imgreference_directory_path(rel_person)
@@ -153,9 +153,9 @@ def find_weight(main_person, rel_person):
 
 
 def draw_graph(graph, person_id, labels=None, graph_layout='spring',
-               node_size=1600, node_color='blue', node_alpha=0.3,
+               node_size=600, node_color='blue', node_alpha=0.3,
                node_text_size=12,
-               edge_color='blue', edge_alpha=0.3, edge_tickness=1,
+               edge_color='red', edge_alpha=0.3, edge_thickness=1,
                edge_text_pos=0.3,
                text_font='sans-serif'):
 
@@ -177,11 +177,20 @@ def draw_graph(graph, person_id, labels=None, graph_layout='spring',
     else:
         graph_pos=nx.shell_layout(G)
 
+    edgewidth = edge_thickness
+    if labels:
+        edgewidth = []
+        minlabel = min(labels)
+        for label in labels:
+            edgewidth.append(label - minlabel + 1)
+
     # draw graph
+    NoN = nx.number_of_nodes(G)
+    plt.figure(1,figsize=(10 + 1.2*NoN,10 + 1.2*NoN))
     nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, 
-                           alpha=node_alpha, node_color=node_color)
-    nx.draw_networkx_edges(G,graph_pos,width=edge_tickness,
-                           alpha=edge_alpha,edge_color=edge_color)
+                           alpha=node_alpha, node_color=node_color, label='Persoas')
+    nx.draw_networkx_edges(G,graph_pos,width=edgewidth,
+                           alpha=edge_alpha,edge_color=edge_color, label='Num. fotos en comun')
     nx.draw_networkx_labels(G, graph_pos,font_size=node_text_size,
                             font_family=text_font)
 
@@ -191,7 +200,16 @@ def draw_graph(graph, person_id, labels=None, graph_layout='spring',
     edge_labels = dict(zip(graph, labels))
     nx.draw_networkx_edge_labels(G, graph_pos, edge_labels=edge_labels, 
                                  label_pos=edge_text_pos)
+    
+    #legend
+    plt.legend(scatterpoints=1)
+    filepath = os.path.join(settings.MEDIA_ROOT,"graph_{0}.png".format(person_id))
+    #remove old graph
+    try:
+        os.remove(filepath)
+    except OSError:
+        pass
 
     # save graph
-    plt.savefig(os.path.join(settings.MEDIA_ROOT,"graph_{0}.png".format(person_id)))
+    plt.savefig(filepath)
     plt.clf()

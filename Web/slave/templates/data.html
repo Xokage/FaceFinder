@@ -7,11 +7,18 @@
             <div class="wrap clearfix">
                 <div class="center">
                     <h1>Datos obtidos</h1>
+                    <h2>Filtro de datos</h2>
+                    <form enctype="multipart/form-data" method="POST" class="dark-matter" >{% csrf_token %}
+                        {{ form.as_p }}
+                    <button type="submit" class="dark-matter button btn btn-default">Filtrar</button>
+                    </form>
+                    <div>
                     {% if table %}
                         <center>{% render_table table %}</center>
                     {% else %}
                         <h3> Non se atoparon datos </h3>
                     {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
