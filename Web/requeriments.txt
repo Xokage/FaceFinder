@@ -4,3 +4,4 @@ django-cleanup
 pillow
 matplotlib
 mysql-python
+networkx
