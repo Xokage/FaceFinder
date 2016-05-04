@@ -1,1 +1,3 @@
 opbeat
+codacy-coverage
+coverage
