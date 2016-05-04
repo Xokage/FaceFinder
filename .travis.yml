@@ -1,0 +1,13 @@
+language: python
+services:
+– mysql
+python:
+– 2.7
+install:
+– pip install -r Web/requirements.txt
+before_script:
+– mysql -e 'create database facefinder;'
+– cp Web/FaceFinder/travis_settings.py Web/FaceFinder/settings.py
+– python Web/manage.py syncdb –migrate –noinput
+script:
+– python Web/manage.py test

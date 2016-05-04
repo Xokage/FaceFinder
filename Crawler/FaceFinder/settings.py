@@ -1,5 +1,23 @@
 # -*- coding: utf-8 -*-
 
+#################################################################################
+#   Facefinder: Crawl pictures based on known faces and extract information.    #
+#   Copyright (C) 2016 Xoán Antelo Castro                                       #
+#                                                                               #
+#   This program is free software: you can redistribute it and/or modify        #
+#   it under the terms of the GNU General Public License as published by        #
+#   the Free Software Foundation, either version 3 of the License, or           #
+#   (at your option) any later version.                                         #
+#                                                                               #
+#   This program is distributed in the hope that it will be useful,             #
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of              #
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               #
+#   GNU General Public License for more details.                                #
+#                                                                               #
+#   You should have received a copy of the GNU General Public License           #
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
+#################################################################################
+
 # Scrapy settings for FaceFinder project
 #
 # For simplicity, this file contains only settings considered important or
@@ -84,18 +102,6 @@ AUTOTHROTTLE_DEBUG=False
 #HTTPCACHE_DIR='httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES=[]
 #HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-
-#Scrappy js
-
-#DOWNLOADER_MIDDLEWARES = {
-#    'scrapyjs.SplashMiddleware': 725,
-#}
-#SPLASH_URL = 'http://localhost:8050/'
-#DUPEFILTER_CLASS = 'scrapyjs.SplashAwareDupeFilter'
-#HTTPCACHE_STORAGE = 'scrapyjs.SplashAwareFSCacheStorage'
-
-
 
 DUPEFILTER_CLASS = "FaceFinder.bloom_filter.BLOOMDupeFilter"
 
