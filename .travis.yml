@@ -11,3 +11,5 @@ before_script:
 - python Web/manage.py migrate
 script:
 - python Web/manage.py test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
