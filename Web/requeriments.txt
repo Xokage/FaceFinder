@@ -3,4 +3,4 @@ django-tables2
 django-cleanup
 pillow
 matplotlib
-
+mysql-python
