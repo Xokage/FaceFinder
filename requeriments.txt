@@ -1,5 +1,3 @@
-###### Requirements without Version Specifiers ######
-brpy
-
 ###### Refer to other requirements files ######
 -r Web/requeriments.txt
+-r Crawler/requeriments.txt
