@@ -1,4 +1,6 @@
-FACEFINDER
+# FACEFINDER
+
+[![Build Status](https://travis-ci.org/Xokage/FaceFinder.svg?branch=master)](https://travis-ci.org/Xokage/FaceFinder)
 
 This software is my project of finishing university grade in computer science.
 
