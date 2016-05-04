@@ -4,7 +4,7 @@ services:
 python:
 - 2.7
 install:
-- pip install -r Web/requirements.txt
+- pip install -r Web/requeriments.txt
 before_script:
 - mysql -e 'create database facefinder;'
 - cp Web/FaceFinder/travis_settings.py Web/FaceFinder/settings.py
