@@ -2,6 +2,11 @@
 django-tables2
 django-cleanup
 pillow
+numpy
+python_dateutil
+pyparsing
+pytz
+cycler
 matplotlib
 mysql-python
 networkx

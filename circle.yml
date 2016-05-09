@@ -1,0 +1,18 @@
+## Customize dependencies
+dependencies:
+  cache_directories:
+    - /home/ubuntu/ffmpeg_sources
+    - /home/ubuntu/opencv_sources
+    - /home/ubuntu/openbr
+    - /opt/circleci/.pyenv/versions/2.7.11
+    - /home/ubuntu/aptcache
+    - /home/ubuntu/pipcache
+  pre:
+    - export PATH=/usr/local/bin:$PATH
+    - sh scripts_circleci/apt-packages.sh
+    - sh scripts_circleci/install_openbr.sh
+    - sh scripts_circleci/pip-cache.sh
+
+test:
+    override:
+        - sh scripts_circleci/run_crawler_tests.sh

@@ -51,6 +51,7 @@ class TwitterSpiderTest(unittest.TestCase):
         self._test_parse_item_results(results, 45)
 
     def test_compare_images(self):
+        #THIS TEST FAILS ON CIRCLE-CI SO IT WONT RUN ON IT (hangs, dunno why)
         self.spider.start_requests()
         imageBillAPath = 'file:' + urllib.pathname2url(os.path.join('FaceFinder','test','images','BillA.jpg'))
         imageBillBPath = 'file:' + urllib.pathname2url(os.path.join('FaceFinder','test','images','BillB.jpg'))
@@ -66,34 +67,3 @@ class TwitterSpiderTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-
-'''
-        Unsuccesfull tests 
-   
-    def _test_parse_image_results(self, image, expected_length):
-        if(image!=None):
-            count = 1
-        else:
-            count = 0
-
-        permalinks = set()
-        for req in image:
-            count = count + 1
-        self.assertEqual(count, expected_length)
-
-    def test_parse_image(self):
-        #this directory SHOULD NOT exist, it should have been cleaned, so if it exists throw exception.
-        os.makedirs('downloads_dir')
-        self.spider.start_requests()
-
-        image = self.spider.parse_image(fake_response_from_file('html/BillNyeTweetImage.html','https://mobile.twitter.com/BillNye/status/728682566039928832'))
-        self._test_parse_image_results(image, 1)
-
-    def test_parse_image_no_person(self):
-        #this directory SHOULD NOT exist, it should have been cleaned, so if it exists throw exception.
-        os.makedirs('downloads_dir')
-        self.spider.start_requests()
-
-        image = self.spider.parse_image(fake_response_from_file('html/BillNyeTweetNoImage.html','https://mobile.twitter.com/BillNye/status/728682566039928832'))
-        self._test_parse_image_results(image, 1)
-'''
