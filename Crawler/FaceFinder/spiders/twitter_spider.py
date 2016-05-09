@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #################################################################################
 #   Facefinder: Crawl pictures based on known faces and extract information.    #
 #   Copyright (C) 2016 Xoán Antelo Castro                                       #
@@ -25,6 +26,7 @@ import os
 import errno
 import urllib2
 import logging
+import hashlib
 class TwitterSpider(scrapy.Spider):
     ''' Lista argumentos:
         start_url,
@@ -129,28 +131,8 @@ class TwitterSpider(scrapy.Spider):
         for image in response.xpath("//img[contains(@src,'pbs.twimg.com/media')]"):
             #Get image and compare it
             imageurl = str(image.xpath('@src').extract())[3:-2]
-            image_to_compare = self.get_image(imageurl)
-
-            # load and enroll image from URL
-            image = open(image_to_compare).read()
-            tmpl = self.br.br_load_img(image, len(image))
-            targets = self.br.br_enroll_template(tmpl)
-            ntargets = self.br.br_num_templates(targets)
-
-            # compare and collect scores
-
-            # compare with all images
-            scores = []
-
-            for query, nquery in self.comparision_list:
-                scoresmat = self.br.br_compare_template_lists(targets, query)
-                for r in range(ntargets):
-                    for c in range(nquery):
-                        scores.append((imageurl, self.br.br_get_matrix_output_at(scoresmat, r, c)))
-            # clean up - no memory leaks
-            self.br.br_free_template(tmpl)
-            self.br.br_free_template_list(targets)
-
+            print(imageurl)
+            scores = self.compare_image(imageurl)
 
             # print top 10 match URLs
             scores.sort(key=lambda s: s[1])
@@ -173,10 +155,15 @@ class TwitterSpider(scrapy.Spider):
 
     def get_image(self, url):
         attempts = 0
-        filename = str(url[28:url.find('.jpg')])
+        filename=""
+        if 'twimg' in url:
+            filename = str(url[url.find('media/')+6:url.find('.jp')])
+        else:
+            filename = hashlib.sha224(url).hexdigest()
         if (not os.path.isfile(os.path.join(self.downloads_dir,filename + '.jpg'))):
             while attempts < 3:
                 try:
+                    print(url)                    
                     response = urllib2.urlopen(url, timeout = 5)
                     content = response.read()
                     f = open(os.path.join(self.downloads_dir, filename + '.jpg'), 'w' )
@@ -188,7 +175,6 @@ class TwitterSpider(scrapy.Spider):
                     logging.error(type(e))
         else:
             logging.debug("Already downloaded!")
-
         return os.path.join(self.downloads_dir,filename + '.jpg')
 
     def closed(self, reason):
@@ -198,3 +184,28 @@ class TwitterSpider(scrapy.Spider):
         for query, nqueries in self.comparision_list:
             self.br.br_free_template_list(query)
         self.br.br_finalize()
+
+    def compare_image(self, imageurl):
+
+        image_to_compare = self.get_image(imageurl)
+        # load and enroll image from URL
+
+        image = open(image_to_compare).read()
+        tmpl = self.br.br_load_img(image, len(image))
+        targets = self.br.br_enroll_template(tmpl)
+        ntargets = self.br.br_num_templates(targets)
+        # compare and collect scores
+
+        # compare with all images
+        scores = []
+
+        for query, nquery in self.comparision_list:
+            scoresmat = self.br.br_compare_template_lists(targets, query)
+            for r in range(ntargets):
+                for c in range(nquery):
+                    scores.append((imageurl, self.br.br_get_matrix_output_at(scoresmat, r, c)))
+        # clean up - no memory leaks
+        self.br.br_free_template(tmpl)
+        self.br.br_free_template_list(targets)
+        return scores
+

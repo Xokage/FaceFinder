@@ -17,26 +17,31 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
 #################################################################################
 
-from pybloom import BloomFilter
-from scrapy.utils.job import job_dir
-from scrapy.dupefilters import BaseDupeFilter
- 
-class BLOOMDupeFilter(BaseDupeFilter):
-    """Request Fingerprint duplicates filter"""
- 
-    def __init__(self, path=None):
-        self.file = None
-        self.fingerprints = BloomFilter(2000000, 0.00001)
- 
-    @classmethod
-    def from_settings(cls, settings):
-        return cls(job_dir(settings))
- 
-    def request_seen(self, request):
-        fp = request.url
-        if fp in self.fingerprints:
-            return True
-        self.fingerprints.add(fp)
- 
-    def close(self, reason):
-        self.fingerprints = None
+import os
+
+from scrapy.http import TextResponse, Request
+
+def fake_response_from_file(file_name, url=None):
+    """
+    Create a Scrapy fake HTTP response from a HTML file
+    @param file_name: The relative filename from the responses directory,
+                      but absolute paths are also accepted.
+    @param url: The URL of the response.
+    returns: A scrapy HTTP response which can be used for unittesting.
+    """
+    if not url:
+        url = 'http://mobile.twitter.com/FaceFinder'
+
+    request = Request(url=url)
+    if not file_name[0] == '/':
+        responses_dir = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(responses_dir, file_name)
+    else:
+        file_path = file_name
+
+    file_content = open(file_path, 'r').read()
+
+    response = TextResponse(url=url,
+        request=request,
+        body=file_content,encoding='utf-8')
+    return response

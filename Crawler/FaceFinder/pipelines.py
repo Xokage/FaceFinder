@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 #################################################################################
 #   Facefinder: Crawl pictures based on known faces and extract information.    #
 #   Copyright (C) 2016 Xoán Antelo Castro                                       #
