@@ -10,6 +10,7 @@ before_script:
 - cp Web/FaceFinder/travis_settings.py Web/FaceFinder/settings.py
 - python Web/manage.py migrate
 script:
-- python Web/manage.py test
+- cd Crawler
+- python -m unittest tests
 after_success:
   - bash <(curl -s https://codecov.io/bash)
