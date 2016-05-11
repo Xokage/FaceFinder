@@ -3,13 +3,7 @@
 mkdir tmp
 cd tmp
 
-#Yasm
-git clone git://github.com/yasm/yasm.git
-cd yasm
-./configure
-make
-sudo make install
-cd ..
+
 
 #x264
 mkdir ~/ffmpeg_sources
