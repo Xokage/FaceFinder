@@ -3,18 +3,47 @@
 mkdir tmp
 cd tmp
 
-#OpenCV
-mkdir opencv
-cd opencv
-wget http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
-unzip opencv-2.4.11.zip
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-make -j4
+#Yasm
+git clone git://github.com/yasm/yasm.git
+cd yasm
+./configure
+make
 sudo make install
-cd ../..
-rm -rf opencv
+cd ..
+
+#x264
+mkdir ~/ffmpeg_sources
+cd ~/ffmpeg_sources
+wget http://download.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+tar xjf last_x264.tar.bz2
+cd x264-snapshot*
+./configure --enable-shared --enable-pic
+make
+sudo make install
+sudo ldconfig -v
+
+#ffmpeg
+cd ~/ffmpeg_sources
+wget http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2
+tar xjf ffmpeg-snapshot.tar.bz2
+cd ffmpeg
+./configure --extra-libs="-ldl" --enable-gpl --enable-libass --enable-libfreetype --enable-libtheora --enable-libvorbis --enable-libx264 --enable-nonfree --enable-x11grab --enable-shared --enable-pic
+make
+sudo make install
+sudo ldconfig -v
+
+#OpenCV
+mkdir ~/opencv_sources
+cd ~/opencv_sources
+wget http://kent.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.9/opencv-2.4.9.zip
+unzip -qq opencv-2.4.9.zip
+cd opencv-2.4.9
+mkdir release
+cd release
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_NEW_PYTHON_SUPPORT=ON ..
+make
+sudo make install
+sudo ldconfig -v
 
 
 #OpenBR

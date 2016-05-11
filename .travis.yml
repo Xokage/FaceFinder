@@ -1,0 +1,23 @@
+language: python
+services:
+- mysql
+python:
+- 2.7
+before_install:
+- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+- sudo apt-get -qq update
+- sudo apt-cache search qt5
+- sudo apt-get install -y build-essential cmake cmake-curses-gui qt5-default libqt5svg5-dev qtcreator git autoconf automake build-essential libass-dev libfreetype6-dev libgpac-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libx11-dev libxext-dev libxfixes-dev pkg-config texi2html zlib1g-dev
+- sudo aptitude build-dep -y libopencv-dev
+- sudo chmod +x /home/travis/virtualenv/python3.5.0/bin/python
+- sh install_openbr.sh
+install:
+- pip install -r requeriments.txt
+before_script:
+- mysql -e 'create database facefinder;'
+- cp Web/FaceFinder/travis_settings.py Web/FaceFinder/settings.py
+- python Web/manage.py migrate
+script:
+- cd Crawler; python -m unittest tests
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
