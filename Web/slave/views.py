@@ -30,6 +30,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django_tables2   import RequestConfig
 from django.conf import settings
 import urllib2
+from urllib2 import URLError
 import urllib
 import json
 import networkx as nx
@@ -93,29 +94,40 @@ def data(request):
 def jobs(request):
     if request.path[-1] == '/':
         return redirect(request.path[:-1])
-    response = urllib2.urlopen(scrapyd_url + "listjobs.json?project=FaceFinder")    #call api of scrapyd
-    job_list = response
-    job_list_json = json.load(job_list)
-    if job_list_json['running']:
-        table_running = JobRunningTable(job_list_json['running'])
-        RequestConfig(request, paginate={"per_page": 25}).configure(table_running)
-    else:
-        table_running = None
-    if job_list_json['finished']:
-        table_finished = JobTable(job_list_json['finished'])
-        RequestConfig(request, paginate={"per_page": 25}).configure(table_finished)
-    else:
-        table_finished = None
-    if job_list_json['pending']:
-        table_pending = JobTable(job_list_json['pending'])
-        RequestConfig(request, paginate={"per_page": 25}).configure(table_pending)
-    else:
-        table_pending = None
+    scrapyd_not_open = True
+    table_running = None
+    table_pending = None
+    table_finished = None
+        
+    try:
+        response = urllib2.urlopen(scrapyd_url + "listjobs.json?project=FaceFinder")    #call api of scrapyd
+        scrapyd_not_open = False
+        job_list = response
+        job_list_json = json.load(job_list)
+        if job_list_json['running']:
+            table_running = JobRunningTable(job_list_json['running'])
+            RequestConfig(request, paginate={"per_page": 25}).configure(table_running)
+        else:
+            table_running = None
+        if job_list_json['finished']:
+            table_finished = JobTable(job_list_json['finished'])
+            RequestConfig(request, paginate={"per_page": 25}).configure(table_finished)
+        else:
+            table_finished = None
+        if job_list_json['pending']:
+            table_pending = JobTable(job_list_json['pending'])
+            RequestConfig(request, paginate={"per_page": 25}).configure(table_pending)
+        else:
+            table_pending = None
+    except URLError:
+        scrapyd_not_open = True    
+    
     return render(request,
         'jobs.html',
         {'table_running':table_running,
         'table_finished':table_finished,
-        'table_pending':table_pending},
+        'table_pending':table_pending,
+        'scrapyd_not_open':scrapyd_not_open},
     )
 
 

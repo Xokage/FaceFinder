@@ -26,23 +26,27 @@
             <div class="wrap clearfix">
                 <div class="center">
                     <h1>Tarefas</h1>
+                    {% if scrapyd_not_open %}
+                        <h2>Non se pode conectar a scrapyd. Comprobe que ten o servizo arrancado.</h2>
+                    {% else %}
                         <h2>En execución</h2>
-                    {% if table_running %}
-                        <center>{% render_table table_running %}</center>
-                    {% else %}
-                        <center>Non se atoparon tarefas.</center>
-                    {% endif %}
-                        <h2>Rematadas</h2>
-                    {% if table_finished %}
-                        <center>{% render_table table_finished %}</center>
-                    {% else %}
-                        <center>Non se atoparon tarefas.</center>
-                    {% endif %}
-                        <h2>Pendentes</h2>
-                    {% if table_pending %}
-                        <center>{% render_table table_pending %}</center>
-                    {% else %}
-                        <center>Non se atoparon tarefas.</center>
+                        {% if table_running %}
+                            <center>{% render_table table_running %}</center>
+                        {% else %}
+                            <center>Non se atoparon tarefas.</center>
+                        {% endif %}
+                            <h2>Rematadas</h2>
+                        {% if table_finished %}
+                            <center>{% render_table table_finished %}</center>
+                        {% else %}
+                            <center>Non se atoparon tarefas.</center>
+                        {% endif %}
+                            <h2>Pendentes</h2>
+                        {% if table_pending %}
+                            <center>{% render_table table_pending %}</center>
+                        {% else %}
+                            <center>Non se atoparon tarefas.</center>
+                        {% endif %}
                     {% endif %}
                     </br>
 
