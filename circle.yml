@@ -16,3 +16,4 @@ dependencies:
 test:
     override:
         - sh scripts_circleci/run_crawler_tests.sh
+        - sh scripts_circleci/run_django_tests.sh
