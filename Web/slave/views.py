@@ -18,15 +18,14 @@
 #################################################################################
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 
-from django_tables2   import RequestConfig
+from django_tables2 import RequestConfig
 
-import urllib2, urllib, json, errno
+import urllib2, urllib, json
 
 from urllib2 import URLError
 
@@ -98,7 +97,7 @@ def jobs(request):
             table_pending = None
     except URLError:
         scrapyd_not_open = True
-    
+
     return render(request,
         'jobs.html',
         {'table_running':table_running,
@@ -138,7 +137,7 @@ def addjob(request):
 
 def people(request):
     if request.path[-1] == '/':
-        return redirect(request.path[:-1])   
+        return redirect(request.path[:-1])
     data_list = Person.objects.all()
     table = PersonDeleteTable(data_list)
     RequestConfig(request, paginate={"per_page": 25}).configure(table)
@@ -244,7 +243,7 @@ def delete_picture(request, picture_id):
     :return:
     """
     try:
-        picture = Picture.objects.get(id=picture_id)   
+        picture = Picture.objects.get(id=picture_id)
     except ObjectDoesNotExist:
         return HttpResponseBadRequest('Id incorrecta. <meta http-equiv="refresh" content="1;url={0}"> '.format(request.META['HTTP_REFERER']))
     if picture:

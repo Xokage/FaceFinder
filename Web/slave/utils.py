@@ -17,7 +17,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
 #################################################################################
 
-import os, urllib, json, uuid, errno
+import os, json, uuid, errno
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -25,15 +25,14 @@ import matplotlib.pyplot as plt
 from brpy import init_brpy
 
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.paginator import EmptyPage, PageNotAnInteger
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render, render_to_response
-from django.template import loader, RequestContext
+from django.core.paginator import EmptyPage
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render
+from django.template import loader
 from django.utils.safestring import mark_safe
 
-from .models import Person, Picture
-from .tables import PersonTable, DataTable
+from .models import Picture
+from .tables import PersonTable
 from .forms  import *
 
 def dir_exists(path):
@@ -81,8 +80,7 @@ def find_weight(main_person, rel_person, min_score):
     br = init_brpy(br_loc='/usr/local/lib') #Default openbr lib location.
     br.br_initialize_default()
     br.br_set_property('algorithm','FaceRecognition') #Algorithm to compare faces
-    br.br_set_property('enrollAll','false')   
-
+    br.br_set_property('enrollAll','false')
 
     #Be sure directories exists
     dir_exists(mimage_dir)
@@ -91,14 +89,14 @@ def find_weight(main_person, rel_person, min_score):
 
     #Add images to br
     directories = [mimage_dir]
-    br_add_images(directories,mtmpl_list,mcomparision_list,br)                  
+    br_add_images(directories,mtmpl_list,mcomparision_list,br)
 
     #Add images to br
     directories = [rimage_dir]
     br_add_images(directories,rtmpl_list,rcomparision_list,br)
 
     #Compare images
-    for root, dirs, files in os.walk(downloads_dir, topdown=False):
+    for root, _, files in os.walk(downloads_dir, topdown=False):
         for name in files:
             image = open(os.path.join(root, name)).read()
             tmpl = br.br_load_img(image, len(image))
@@ -185,7 +183,7 @@ def draw_graph(graph, person_id, labels=None, graph_layout='spring',
     # draw graph
     NoN = nx.number_of_nodes(G)
     plt.figure(1,figsize=(10 + 1.2*NoN,10 + 1.2*NoN))
-    nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, 
+    nx.draw_networkx_nodes(G,graph_pos,node_size=node_size,
                            alpha=node_alpha, node_color=node_color, label='Persoas')
     nx.draw_networkx_edges(G,graph_pos,width=edgewidth,
                            alpha=edge_alpha,edge_color=edge_color, label='Num. fotos en comun')
@@ -196,9 +194,9 @@ def draw_graph(graph, person_id, labels=None, graph_layout='spring',
         labels = range(len(graph))
 
     edge_labels = dict(zip(graph, labels))
-    nx.draw_networkx_edge_labels(G, graph_pos, edge_labels=edge_labels, 
+    nx.draw_networkx_edge_labels(G, graph_pos, edge_labels=edge_labels,
                                  label_pos=edge_text_pos)
-    
+
     #legend
     plt.legend(scatterpoints=1)
     filepath = os.path.join(settings.MEDIA_ROOT,"graph_{0}.png".format(person_id))

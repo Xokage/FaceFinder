@@ -90,7 +90,7 @@ class MySQLStorePipeline(object):
                     VALUES ((SELECT id FROM slave_twitteritem WHERE imageUrl = %s), %s)
                 """, (item['imageUrl'], item['person_id']))
             logging.debug("Item stored in db: %s %r" % (url, item))
-    
+
     @staticmethod
     def _handle_error(self, failure, item, spider):
         """Handle occurred on db interaction."""

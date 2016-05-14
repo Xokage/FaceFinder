@@ -55,5 +55,3 @@ class Person(models.Model):
 class Picture(models.Model):
     file = models.ImageField(upload_to=refpictures_directory_path)
     person = models.ForeignKey('Person', on_delete=models.CASCADE,)
-
-    
