@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_tables2',
     'django_cleanup',
+    'django_nose',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -139,3 +140,11 @@ MEDIA_URL = '/media/'
 # NO append slash
 
 APPEND_SLASH = False
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=slave',
+]
+

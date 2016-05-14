@@ -22,7 +22,6 @@
 from datetime import datetime
 from hashlib import md5
 import logging
-from scrapy.exceptions import DropItem
 from twisted.enterprise import adbapi
 
 
@@ -68,7 +67,6 @@ class MySQLStorePipeline(object):
         """Perform an insert or update."""
         url = item['imageUrl']
         person_id = item['person_id']
-        now = datetime.utcnow().replace(microsecond=0).isoformat(' ')
 
         conn.execute("""SELECT EXISTS(
             SELECT 1 FROM slave_twitteritem WHERE imageUrl = %s

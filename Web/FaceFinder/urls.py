@@ -17,7 +17,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
 #################################################################################
 from django.conf.urls import include, url
-from django.contrib import admin
 import settings
 
 urlpatterns = [

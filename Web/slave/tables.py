@@ -75,7 +75,7 @@ class JobTable(tables.Table):
     spider = tables.Column()
 
 class JobRunningTable(JobTable):
-    cancel = TextCancelJobUrlColumn(orderable=False, empty_values=())    
+    cancel = TextCancelJobUrlColumn(orderable=False, empty_values=())
 
 class PersonTable(tables.Table):
     main_picture = ImageFilePersonColumn(orderable=False)

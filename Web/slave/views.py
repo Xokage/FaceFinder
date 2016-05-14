@@ -17,46 +17,27 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
 #################################################################################
 
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.template import loader
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator, EmptyPage
+from django.db.models import Q
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render_to_response, render, redirect
+from django.template import loader, RequestContext
 
 from django_tables2   import RequestConfig
-from django.conf import settings
-import urllib2
-from urllib2 import URLError
-import urllib
-import json
-import networkx as nx
-import os
-import uuid
-import errno
 
+import urllib2, urllib, json, uuid, errno
+import networkx as nx
+
+from urllib2 import URLError
 from brpy import init_brpy
 
-import matplotlib.pyplot as plt
 
 from django.utils.safestring import mark_safe
-from .models import TwitterItem
-from .models import Person
-from .models import Picture
-from .tables import PersonTable
-from .tables import PersonDeleteTable
-from .tables import DataTable
-from .tables import JobTable
-from .tables import JobRunningTable
-from .tables import PersonGraphTable
+from .models import TwitterItem, Person, Picture
+from .tables import PersonTable, PersonDeleteTable, DataTable, JobTable, JobRunningTable, PersonGraphTable
 from .forms  import *
-from .utils import find_weight
-from .utils import draw_graph
-from .utils import imgreference_directory_path
-from .utils import download_directory_path
+from .utils import find_weight, draw_graph, imgreference_directory_path, download_directory_path
 
 scrapyd_url = "http://localhost:6800/"
 
@@ -284,7 +265,7 @@ def canceljob(request, job_id):
     :return:
     """
     data = urllib.urlencode({'project':'FaceFinder', 'job':job_id})
-    req = urllib2.Request(scrapyd_url + "cancel.json", data)    #call api of scrapyd        
+    req = urllib2.Request(scrapyd_url + "cancel.json", data)    #call api of scrapyd
     result = urllib2.urlopen(req)
     response = result.read()
 

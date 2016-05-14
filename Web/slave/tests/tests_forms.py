@@ -71,10 +71,7 @@ class AddPersonFormTestCase(TestCase):
         self.assertEquals('Livingstone',obtained_person.lastname)
 
     def tearDown(self):
-        Person.objects.all().delete()   
-
-
-
+        Person.objects.all().delete()
 
 
 class PhotoUploadFormTestCase(TestCase):
@@ -85,16 +82,12 @@ class PhotoUploadFormTestCase(TestCase):
         form = PhotoUploadForm(None,form_file)
         self.assertTrue(form.is_valid())
 
-
 class DataFilterFormTestCase(TestCase):
 
     def test_valid_form(self):
         form_data = {'person_name': 'Pepe', 'account_name':'conta','min_occurrence':1}
         form = DataFilterForm(form_data)
         self.assertTrue(form.is_valid())
-
-
-
 
 class GraphMinOccurrenceFormTestCase(TestCase):
 
@@ -107,18 +100,3 @@ class GraphMinOccurrenceFormTestCase(TestCase):
         form_data = {'min_occurrence':-1}
         form = GraphMinOccurrenceForm(form_data)
         self.assertFalse(form.is_valid())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

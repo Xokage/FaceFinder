@@ -17,44 +17,24 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
 #################################################################################
 
-import os
-from django.utils.safestring import mark_safe
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.template import loader
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django.db.models import Q
-from django.core.exceptions import ObjectDoesNotExist
-
-from django_tables2   import RequestConfig
-from django.conf import settings
-import urllib2
-import urllib
-import json
+import os, urllib, json, uuid, errno
 import networkx as nx
-import os
-import uuid
-import errno
+import matplotlib.pyplot as plt
+
 
 from brpy import init_brpy
 
-import matplotlib.pyplot as plt
-
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import EmptyPage, PageNotAnInteger
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render, render_to_response
+from django.template import loader, RequestContext
 from django.utils.safestring import mark_safe
-from .models import TwitterItem
-from .models import Person
-from .models import Picture
-from .tables import PersonTable
-from .tables import DataTable
-from .tables import JobTable
-from .tables import PersonGraphTable
-from .forms  import *
 
-import networkx as nx
-import matplotlib.pyplot as plt
+from .models import Person, Picture, 
+from .tables import PersonTable, DataTable
+from .forms  import *
 
 def dir_exists(path):
     try:
@@ -110,11 +90,11 @@ def find_weight(main_person, rel_person, min_score):
     dir_exists(downloads_dir)
 
     #Add images to br
-    directories = [mimage_dir]  
+    directories = [mimage_dir]
     br_add_images(directories,mtmpl_list,mcomparision_list,br)                  
 
     #Add images to br
-    directories = [rimage_dir]                    
+    directories = [rimage_dir]
     br_add_images(directories,rtmpl_list,rcomparision_list,br)
 
     #Compare images

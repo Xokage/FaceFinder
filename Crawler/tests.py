@@ -38,7 +38,6 @@ class TwitterSpiderTest(unittest.TestCase):
 
     def _test_parse_item_results(self, results, expected_length):
         count = 0
-        permalinks = set()
         for req in results:
             count = count + 1
         self.assertEqual(count, expected_length)

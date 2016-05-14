@@ -61,4 +61,3 @@ class PictureTestCase(TestCase):
 
     def tearDown(self):
         shutil.rmtree('FaceFinder/media/pictures/BraisTest MareloTest')
-    

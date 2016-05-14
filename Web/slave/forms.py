@@ -33,7 +33,7 @@ class AddJobForm(forms.Form):
         lastname = self.cleaned_data.get('lastname',None)
         if name and lastname:
             try:
-                person = Person.objects.get(Q(name__contains=data['name']) | Q(lastname__contains=data['lastname']))
+                Person.objects.get(Q(name__contains=data['name']) | Q(lastname__contains=data['lastname']))
             except ObjectDoesNotExist:
                 raise forms.ValidationError("Persoa non atopada!")
         return data

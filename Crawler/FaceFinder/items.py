@@ -25,4 +25,3 @@ class TwitterItem(scrapy.Item):
     tweetUrl = scrapy.Field()
     occurrence = scrapy.Field()
     person_id = scrapy.Field()
-    pass

@@ -26,26 +26,24 @@ urlpatterns = [
     url(r'^data/?$', views.data, name='data'),
     # ex: /jobs
     url(r'^jobs/?$', views.jobs, name='jobs'),
-    # ex: /addjob    
+    # ex: /addjob
     url(r'^addjob/?$', views.addjob, name='addjob'),
-    # ex: /people    
+    # ex: /canceljob
     url(r'^canceljob/(?P<job_id>[0-9a-f]+)$', views.canceljob, name='canceljob'),
-    # ex: /people    
+    # ex: /people
     url(r'^people/?$', views.people, name='people'),
-    # ex: /graphs    
+    # ex: /graphs
     url(r'^graphs/?$', views.graphs, name='graphs'),
-    # ex: /graphs/1    
+    # ex: /graphs/1
     url(r'^graphs/(?P<person_id>[0-9]+)$', views.concretegraph, name='concretegraph'),
-    # ex: /addperson    
+    # ex: /addperson
     url(r'^addperson/?$', views.addperson, name='addperson'),
-    # ex: /person/1    
+    # ex: /person/1
     url(r'^person/(?P<person_id>[0-9]+)$', views.concreteperson, name='concreteperson'),
-    # ex: /upload_picture/1    
+    # ex: /upload_picture/1
     url(r'^upload_picture/(?P<person_id>[0-9]+)$', views.upload_picture, name='upload_picture'),
-    # ex: /delete_picture/1    
+    # ex: /delete_picture/1
     url(r'^delete_picture/(?P<picture_id>[0-9]+)$', views.delete_picture, name='delete_picture'),
-    # ex: /delete_picture/1    
+    # ex: /delete_picture/1
     url(r'^delete_person/(?P<person_id>[0-9]+)$', views.delete_person, name='delete_person'),
-    
-
 ]
