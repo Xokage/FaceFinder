@@ -31,7 +31,6 @@ class PersonTestCase(TestCase):
     def test_upload_main_picture(self):
         """Person's main picture is correctly uploaded"""
 
-        person = Person.objects.get(name="BraisTest")
         expected_file = 'FaceFinder/media/pictures/BraisTest MareloTest/main_picture/' + self.filename
         self.assertTrue(os.path.isfile(expected_file))
 

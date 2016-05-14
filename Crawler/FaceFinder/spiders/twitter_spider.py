@@ -18,8 +18,6 @@
 #################################################################################
 
 import scrapy
-from scrapy.spiders import Rule
-from scrapy.linkextractors import LinkExtractor
 from FaceFinder.items import TwitterItem
 from brpy import init_brpy
 import os
@@ -83,7 +81,7 @@ class TwitterSpider(scrapy.Spider):
 
         #Add images to br
         files = []
-        directories = [self.image_dir]                    
+        directories = [self.image_dir]
         logging.debug("Loading images from %s." % self.image_dir)
         count = 0
         while(directories): #Repeat until no more subdirectories found
@@ -131,13 +129,11 @@ class TwitterSpider(scrapy.Spider):
         for image in response.xpath("//img[contains(@src,'pbs.twimg.com/media')]"):
             #Get image and compare it
             imageurl = str(image.xpath('@src').extract())[3:-2]
-            print(imageurl)
             scores = self.compare_image(imageurl)
 
-            # print top 10 match URLs
             scores.sort(key=lambda s: s[1])
             maxscore = float("-inf")
-            for url, score in scores:
+            for _, score in scores:
                 if(score > maxscore):
                     maxscore = score
             #compare with pass score
@@ -163,7 +159,6 @@ class TwitterSpider(scrapy.Spider):
         if (not os.path.isfile(os.path.join(self.downloads_dir,filename + '.jpg'))):
             while attempts < 3:
                 try:
-                    print(url)                    
                     response = urllib2.urlopen(url, timeout = 5)
                     content = response.read()
                     f = open(os.path.join(self.downloads_dir, filename + '.jpg'), 'w' )
@@ -181,7 +176,7 @@ class TwitterSpider(scrapy.Spider):
         logging.info("Freeing memory from openbr.")
         for tmpl in self.tmpl_list:
             self.br.br_free_template(tmpl)
-        for query, nqueries in self.comparision_list:
+        for query, _ in self.comparision_list:
             self.br.br_free_template_list(query)
         self.br.br_finalize()
 

@@ -10,3 +10,4 @@ cycler
 matplotlib
 mysql-python
 networkx
+django-nose

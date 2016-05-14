@@ -32,7 +32,7 @@ from django.shortcuts import render, render_to_response
 from django.template import loader, RequestContext
 from django.utils.safestring import mark_safe
 
-from .models import Person, Picture, 
+from .models import Person, Picture
 from .tables import PersonTable, DataTable
 from .forms  import *
 

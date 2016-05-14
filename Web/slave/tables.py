@@ -25,38 +25,47 @@ from django.utils.html import escape
 from django.conf import settings
 
 class ImageUrlColumn(tables.Column):
+    @staticmethod
     def render(self, value):
         return mark_safe('<img src="%s" style="width:150px;height:150px;"/>' % escape(value[:value.find(':small')]))
 
 class TweetColumn(tables.Column):
+    @staticmethod
     def render(self, value):
         return mark_safe('<a target="_blank" href="%s" >Tweet</a>' % escape(value))
 
 class ImageFileColumn(tables.Column):
+    @staticmethod
     def render(self, value):
         return mark_safe('<img src="%s" style="width:150px;height:150px;"/>' % value.url)
 
 class TextGraphUrlColumn(tables.Column):
+    @staticmethod
     def render(self, value, record):
         return mark_safe('<a href="graphs/{0}">{1}</a>'.format(str(record.id), value))
 
 class ImageFileGraphColumn(tables.Column):
+    @staticmethod
     def render(self, value, record):
         return mark_safe('<a href="graphs/{0}"><img src="{1}" style="width:150px;height:150px;"/></a>'.format(str(record.id), value.url))
 
 class ImageFilePersonColumn(tables.Column):
+    @staticmethod
     def render(self, value, record):
         return mark_safe('<a href="person/{0}"><img src="{1}" style="width:150px;height:150px;"/></a>'.format(str(record.id), value.url))
 
 class TextPersonUrlColumn(tables.Column):
+    @staticmethod
     def render(self, value, record):
         return mark_safe('<a href="person/{0}">{1}</a>'.format(str(record.id), value))
 
 class TextCancelJobUrlColumn(tables.Column):
+    @staticmethod
     def render(self,value,record):
         return mark_safe('<a href="canceljob/{0}"><img src="{1}img/red_x_small.png" style="width:15px;height:15px;"/></a>'.format(str(record['id']),settings.STATIC_URL))
 
 class TextDeletePersonUrlColumn(tables.Column):
+    @staticmethod
     def render(self,value,record):
         return mark_safe('''<a href="delete_person/{0}" onClick="return confirm('Queres borrar a persoa?')"><img src="{1}img/red_x_small.png" style="width:25px;height:25px;"/></a>'''.format(str(record.id),settings.STATIC_URL))
 

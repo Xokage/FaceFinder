@@ -18,7 +18,6 @@
 #################################################################################
 
 from django.db import models
-from django.db.models.signals import post_delete
 
 
 #MODELS UTIL
@@ -48,7 +47,7 @@ class Person(models.Model):
     lastname = models.CharField(verbose_name='Apelidos', max_length=200)
     age = models.IntegerField(verbose_name='Idade')
     main_picture = models.ImageField(verbose_name='Foto', upload_to=pictures_directory_path)
-    
+
     def __str__(self):
         return self.name + " " + self.lastname
 

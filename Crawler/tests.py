@@ -19,7 +19,7 @@
 
 
 import unittest, os, errno, shutil, urllib
-from FaceFinder.spiders.twitter_spider import TwitterSpider 
+from FaceFinder.spiders.twitter_spider import TwitterSpider
 from FaceFinder.test.test_util import fake_response_from_file
 
 
@@ -38,7 +38,7 @@ class TwitterSpiderTest(unittest.TestCase):
 
     def _test_parse_item_results(self, results, expected_length):
         count = 0
-        for req in results:
+        for _ in results:
             count = count + 1
         self.assertEqual(count, expected_length)
 

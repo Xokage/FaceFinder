@@ -17,7 +17,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
 #################################################################################
 
-from django import forms
 from django.test import TestCase
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -25,7 +24,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from slave.forms import AddJobForm, AddPersonForm, PhotoUploadForm, DataFilterForm, GraphMinOccurrenceForm
 from slave.models import Person
 
-import shutil, tempfile
+import shutil
 
 class AddJobFormTestCase(TestCase):
 
@@ -67,7 +66,7 @@ class AddPersonFormTestCase(TestCase):
         form = AddPersonForm(form_data, form_file)
         self.assertTrue(form.is_valid())
         form.save()
-        obtained_person = Person.objects.get(name='Pepe')        
+        obtained_person = Person.objects.get(name='Pepe')
         self.assertEquals('Livingstone',obtained_person.lastname)
 
     def tearDown(self):

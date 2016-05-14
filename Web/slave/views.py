@@ -18,24 +18,20 @@
 #################################################################################
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.paginator import Paginator, EmptyPage
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response, render, redirect
-from django.template import loader, RequestContext
+from django.template import RequestContext
 
 from django_tables2   import RequestConfig
 
-import urllib2, urllib, json, uuid, errno
-import networkx as nx
+import urllib2, urllib, json, errno
 
 from urllib2 import URLError
-from brpy import init_brpy
 
-
-from django.utils.safestring import mark_safe
 from .models import TwitterItem, Person, Picture
-from .tables import PersonTable, PersonDeleteTable, DataTable, JobTable, JobRunningTable, PersonGraphTable
+from .tables import PersonDeleteTable, DataTable, JobTable, JobRunningTable, PersonGraphTable
 from .forms  import *
 from .utils import find_weight, draw_graph, imgreference_directory_path, download_directory_path
 
@@ -79,7 +75,7 @@ def jobs(request):
     table_running = None
     table_pending = None
     table_finished = None
-        
+
     try:
         response = urllib2.urlopen(scrapyd_url + "listjobs.json?project=FaceFinder")    #call api of scrapyd
         scrapyd_not_open = False
@@ -101,7 +97,7 @@ def jobs(request):
         else:
             table_pending = None
     except URLError:
-        scrapyd_not_open = True    
+        scrapyd_not_open = True
     
     return render(request,
         'jobs.html',
@@ -115,7 +111,7 @@ def jobs(request):
 
 def addjob(request):
     if request.path[-1] == '/':
-        return redirect(request.path[:-1])    
+        return redirect(request.path[:-1])
     response = ""
     if request.method == "POST":
         form = AddJobForm(request.POST)
@@ -126,7 +122,7 @@ def addjob(request):
                 data = urllib.urlencode({'project':'FaceFinder', 'spider':'twitterspider', 'start_url':form.cleaned_data['twitter_url'],'image_dir':imgreference_directory_path(person), 'downloads_dir':download_directory_path(person), 'person_id':person_id})
             else:
                 data = urllib.urlencode({'project':'FaceFinder', 'spider':'twitterspider', 'start_url':form.cleaned_data['twitter_url'],'image_dir':form.cleaned_data['image_directory'], 'downloads_dir':form.cleaned_data['downloads_directory']})
-            req = urllib2.Request(scrapyd_url + "schedule.json", data)    #call api of scrapyd        
+            req = urllib2.Request(scrapyd_url + "schedule.json", data)    #call api of scrapyd
             result = urllib2.urlopen(req)
             response = result.read()
     else:
@@ -198,11 +194,10 @@ def concretegraph(request, person_id):
                     weight = find_weight(main_person, person,min_occurrence)
                     if weight > 0:
                         graph.append((main_person,person))
-                        weights.append(weight)      
-            draw_graph(graph,main_person.id,labels=weights)      
+                        weights.append(weight)
+            draw_graph(graph,main_person.id,labels=weights)
     else:
         form =  GraphMinOccurrenceForm()
-
 
     context = {'form' : form,'person_name':main_person.name, 'person_image_url':main_person.main_picture.url, 'person_id':main_person.id}
     return render(request,
@@ -282,7 +277,7 @@ def delete_person(request, person_id):
     :return:
     """
     try:
-        person = Person.objects.get(id=person_id)   
+        person = Person.objects.get(id=person_id)
     except ObjectDoesNotExist:
         return HttpResponseBadRequest('Id incorrecta. <meta http-equiv="refresh" content="1;url={0}"> '.format(request.META['HTTP_REFERER']))
     if person:

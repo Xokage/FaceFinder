@@ -1,4 +1,4 @@
 opbeat
 codacy-coverage
 coverage
-django-nose
+

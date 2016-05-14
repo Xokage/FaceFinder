@@ -19,14 +19,13 @@
 
 #Pipeline based on the one from https://github.com/rolando/dirbot-mysql/
 
-from datetime import datetime
-from hashlib import md5
 import logging
 from twisted.enterprise import adbapi
 
 
 
 class FacefinderPipeline(object):
+    @staticmethod
     def process_item(self, item, spider):
         return item
 
@@ -66,7 +65,6 @@ class MySQLStorePipeline(object):
     def _do_upsert(self, conn, item, spider):
         """Perform an insert or update."""
         url = item['imageUrl']
-        person_id = item['person_id']
 
         conn.execute("""SELECT EXISTS(
             SELECT 1 FROM slave_twitteritem WHERE imageUrl = %s
@@ -92,7 +90,8 @@ class MySQLStorePipeline(object):
                     VALUES ((SELECT id FROM slave_twitteritem WHERE imageUrl = %s), %s)
                 """, (item['imageUrl'], item['person_id']))
             logging.debug("Item stored in db: %s %r" % (url, item))
-
+    
+    @staticmethod
     def _handle_error(self, failure, item, spider):
         """Handle occurred on db interaction."""
         # do nothing, just log

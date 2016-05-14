@@ -26,7 +26,7 @@ class AddJobForm(forms.Form):
     name = forms.CharField(label='Nome da persoa', max_length=100)
     lastname = forms.CharField(label='Apelidos da persoa', max_length=100)
     twitter_url = forms.CharField(label='Url de twitter (recorda que ten que ser de mobile.twitter.com)', max_length=200)
-    
+
     def clean(self):
         data = self.cleaned_data
         name = self.cleaned_data.get('name', None)
@@ -43,7 +43,7 @@ class AddPersonForm(forms.ModelForm):
     lastname = forms.CharField(label='Apelidos da persoa', max_length=100)
     age = forms.IntegerField(label='Idade', min_value=1)
     main_picture = forms.ImageField(label='Fotografia')
-    
+
     class Meta:
         model = Person
         fields = ("name", "lastname", "age", "main_picture")
@@ -61,4 +61,4 @@ class DataFilterForm(forms.Form):
 
 
 class GraphMinOccurrenceForm(forms.Form):
-    min_occurrence = forms.FloatField(label='Acerto', min_value=0)    
+    min_occurrence = forms.FloatField(label='Acerto', min_value=0)
