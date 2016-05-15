@@ -149,7 +149,7 @@ def people(request):
 
 def addperson(request):
     if request.path[-1] == '/':
-        return redirect(request.path[:-1])    
+        return redirect(request.path[:-1])
     if request.method == "POST":
         form = AddPersonForm(request.POST,request.FILES)
         if form.is_valid():
@@ -249,7 +249,7 @@ def delete_picture(request, picture_id):
     if picture:
         picture.delete()
         return HttpResponse('Imaxe borrada correctamente. <meta http-equiv="refresh" content="1;url={0}"> '.format(request.META['HTTP_REFERER']))
-    
+
     return HttpResponseBadRequest('Id incorrecta. <meta http-equiv="refresh" content="1;url={0}"> '.format(request.META['HTTP_REFERER']))
 
 def canceljob(request, job_id):

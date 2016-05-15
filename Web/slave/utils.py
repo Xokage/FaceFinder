@@ -17,7 +17,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
 #################################################################################
 
-import os, json, uuid, errno
+import os, json, errno
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -25,14 +25,8 @@ import matplotlib.pyplot as plt
 from brpy import init_brpy
 
 from django.conf import settings
-from django.core.paginator import EmptyPage
-from django.http import HttpResponseBadRequest
-from django.shortcuts import render
-from django.template import loader
 from django.utils.safestring import mark_safe
 
-from .models import Picture
-from .tables import PersonTable
 from .forms  import *
 
 def dir_exists(path):
