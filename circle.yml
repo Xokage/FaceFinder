@@ -8,6 +8,10 @@ dependencies:
     - /home/ubuntu/aptcache
     - /home/ubuntu/pipcache
   pre:
+    - sudo apt-add-repository -y 'deb
+      http://ppa.launchpad.net/ondrej/mysql-experimental/ubuntu precise
+      main'
+    - sudo apt-get update; 
     - export PATH=/usr/local/bin:$PATH
     - sh scripts_circleci/apt-packages.sh
     - sh scripts_circleci/install_openbr.sh
