@@ -168,7 +168,7 @@ def addperson(request):
 
 def graphs(request):
     if request.path[-1] == '/':
-        return redirect(request.path[:-1])  
+        return redirect(request.path[:-1])
     data_list = Person.objects.all()
     table = PersonGraphTable(data_list)
     RequestConfig(request, paginate={"per_page": 25}).configure(table)
@@ -265,7 +265,7 @@ def canceljob(request, job_id):
 
     if '"status": "ok' in response:
         return HttpResponse('Traballo cancelado correctamente. <meta http-equiv="refresh" content="1;url={0}"> '.format(request.META['HTTP_REFERER']))
-    
+
     return HttpResponseBadRequest('O traballo non se puido cancelar. <meta http-equiv="refresh" content="1;url={0}"> '.format(request.META['HTTP_REFERER']))
 
 
